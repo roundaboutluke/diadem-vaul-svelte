@@ -12,7 +12,7 @@ Diadem-Vaul-Svelte is an unstyled drawer component for Svelte that can be used a
 
 This is a fork of [vaul-svelte](https://github.com/huntabyte/vaul-svelte) by [@huntabyte](https://github.com/huntabyte). The original library is a port of [Vaul](https://github.com/emilkowalski/vaul) for React, created by [Emil Kowalski](https://twitter.com/emilkowalski_).
 
-This fork tracks upstream while carrying changes needed for the Diadem app. If you want a general-purpose drawer, use the upstream `vaul-svelte` package.
+This fork tracks upstream while carrying changes needed for [Diadem](https://github.com/ccev/diadem). If you want a general-purpose drawer, use the upstream `vaul-svelte` package.
 
 ## Usage
 
