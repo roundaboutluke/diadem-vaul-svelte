@@ -2,7 +2,6 @@
 	import { Dialog as DialogPrimitive } from "bits-ui";
 	import { setCtx } from "../ctx.js";
 	import type { Props } from "./types.js";
-	import { get } from "svelte/store";
 
 	type $$Props = Props;
 
@@ -27,20 +26,14 @@
 	export let direction: $$Props["direction"] = "bottom";
 
 	const {
-		states: {
-			keyboardIsOpen,
-			activeSnapPoint: localActiveSnapPoint,
-			drawerId,
-			openDrawerIds,
-			isOpen,
-		},
+		states: { activeSnapPoint: localActiveSnapPoint, isOpen },
 		methods: { closeDrawer, openDrawer },
-		options: { dismissible: localDismissible },
 		updateOption,
-	} = setCtx({
-		defaultOpen: open,
-		defaultActiveSnapPoint: activeSnapPoint,
-		onOpenChange: ({ next }) => {
+	} = setCtx(
+		{
+			defaultOpen: open,
+			defaultActiveSnapPoint: activeSnapPoint,
+			onOpenChange: ({ next }) => {
 			if (open !== next) {
 				onOpenChange?.(next);
 				open = next;
@@ -71,10 +64,16 @@
 		onClose,
 		onRelease,
 		shouldScaleBackground,
-		backgroundColor,
-		dismissible,
-		direction,
-	});
+			backgroundColor,
+			dismissible,
+			direction,
+		},
+		{
+			closeOnOutsideClick,
+			onOutsideClick,
+			onOpenChange,
+		}
+	);
 
 	$: activeSnapPoint !== undefined && localActiveSnapPoint.set(activeSnapPoint);
 
@@ -93,37 +92,13 @@
 </script>
 
 <DialogPrimitive.Root
-	{closeOnOutsideClick}
-	closeOnEscape={false}
 	bind:open
-	preventScroll={false}
 	onOpenChange={(o) => {
 		onOpenChange?.(o);
 		if (!o) {
 			closeDrawer();
 		} else if (o) {
 			openDrawer();
-		}
-	}}
-	onOutsideClick={(e) => {
-		if (!closeOnOutsideClick) return;
-
-		onOutsideClick?.(e);
-
-		if (e?.defaultPrevented) return;
-
-		if ($keyboardIsOpen) {
-			keyboardIsOpen.set(false);
-		}
-		e.preventDefault();
-		if (!$localDismissible) {
-			return;
-		}
-		const $openDialogIds = get(openDrawerIds);
-		const isLast = $openDialogIds[$openDialogIds.length - 1] === get(drawerId);
-		if (isLast) {
-			onOpenChange?.(false);
-			closeDrawer();
 		}
 	}}
 	{...$$restProps}

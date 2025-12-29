@@ -6,7 +6,7 @@
 
 	type $$Props = CloseProps;
 
-	export let el: $$Props["el"] = undefined;
+	export let ref: $$Props["ref"] = undefined;
 	export let asChild = false;
 
 	const {
@@ -16,7 +16,7 @@
 
 {#if asChild}
 	<DialogPrimitive.Close
-		bind:el
+		bind:ref
 		on:click={(e) => {
 			e.preventDefault();
 			closeDrawer();
@@ -37,7 +37,7 @@
 	</DialogPrimitive.Close>
 {:else}
 	<DialogPrimitive.Close
-		bind:el
+		bind:ref
 		on:click={(e) => {
 			e.preventDefault();
 			closeDrawer();

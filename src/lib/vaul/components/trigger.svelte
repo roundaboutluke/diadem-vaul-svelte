@@ -10,22 +10,20 @@
 		refs: { triggerRef },
 	} = getCtx();
 
-	export let el: HTMLButtonElement | undefined = undefined;
+	export let ref: HTMLButtonElement | null = null;
 	export let asChild: boolean = false;
 
-	$: if (el) {
-		triggerRef.set(el);
-	}
+	$: triggerRef.set(ref ?? undefined);
 </script>
 
 {#if asChild}
-	<DialogPrimitive.Trigger {asChild} let:builder on:click on:keydown bind:el {...$$restProps}>
+	<DialogPrimitive.Trigger {asChild} let:builder on:click on:keydown bind:ref {...$$restProps}>
 		<TriggerWrapper meltBuilder={builder} let:newBuilder>
 			<slot builder={newBuilder} />
 		</TriggerWrapper>
 	</DialogPrimitive.Trigger>
 {:else}
-	<DialogPrimitive.Trigger let:builder on:click on:keydown bind:el {...$$restProps}>
+	<DialogPrimitive.Trigger let:builder on:click on:keydown bind:ref {...$$restProps}>
 		<slot {builder} />
 	</DialogPrimitive.Trigger>
 {/if}

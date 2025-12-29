@@ -72,7 +72,9 @@ export function handlePositionFixed({
 				return;
 			}
 
-			window.scrollTo(x, y);
+			if (x !== 0 || y !== 0) {
+				window.scrollTo(x, y);
+			}
 		});
 
 		previousBodyPosition = null;
