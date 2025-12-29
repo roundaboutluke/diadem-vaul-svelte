@@ -8,9 +8,9 @@
 		refs: { triggerRef },
 	} = getCtx();
 
-	export let ref: HTMLButtonElement | null = null;
+	export let ref: $$Props["ref"] = undefined;
 
-	$: triggerRef.set(ref ?? undefined);
+	$: triggerRef.set((ref as HTMLButtonElement | null) ?? undefined);
 </script>
 
 <DialogPrimitive.Trigger bind:ref {...$$restProps}>

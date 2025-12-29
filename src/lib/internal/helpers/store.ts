@@ -2,15 +2,13 @@ import type { Readable, Updater, Writable } from "svelte/store";
 import { derived, writable } from "svelte/store";
 import { onDestroy, onMount } from "svelte";
 
-type Stores = Readable<unknown> | Readable<unknown>[] | Record<string, Readable<unknown>>;
+type Stores = Readable<unknown> | Array<Readable<unknown>>;
 
-type StoresValues<S> = S extends Readable<infer U>
-	? U
-	: S extends Readable<infer U>[]
-		? { [K in keyof S]: S[K] extends Readable<infer V> ? V : never }
-		: S extends Record<string, Readable<infer V>>
-			? { [K in keyof S]: S[K] extends Readable<infer V2> ? V2 : never }
-			: never;
+type StoresValues<S> = S extends Readable<infer _U>
+	? _U
+	: S extends Readable<infer _U>[]
+		? { [K in keyof S]: S[K] extends Readable<infer _V> ? _V : never }
+		: never;
 
 /**
  * A utility function that creates an effect from a set of stores and a function.
@@ -73,14 +71,17 @@ export function derivedWithUnsubscribe<S extends Stores, T>(
 		unsubscribers = [];
 	};
 
-	const derivedStore = derived(stores, ($storeValues) => {
-		unsubscribe();
-		return fn($storeValues, onUnsubscribe);
-	});
+	const derivedStore: Readable<T> = derived(
+		stores as Readable<unknown> | Readable<unknown>[],
+		($storeValues) => {
+			unsubscribe();
+			return fn($storeValues as StoresValues<S>, onUnsubscribe);
+		}
+	) as Readable<T>;
 
 	safeOnDestroy(unsubscribe);
 
-	const subscribe: typeof derivedStore.subscribe = (...args) => {
+	const subscribe: Readable<T>["subscribe"] = (...args) => {
 		const unsub = derivedStore.subscribe(...args);
 		return () => {
 			unsub();

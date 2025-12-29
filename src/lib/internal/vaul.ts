@@ -554,8 +554,14 @@ export function createVaul(props: CreateVaulProps) {
 						keyboardIsOpen.set(!$keyboardIsOpen);
 					}
 
-					if ($snapPoints && $snapPoints.length > 0 && $snapPointsOffset && $activeSnapPointIndex) {
-						const activeSnapPointHeight = $snapPointsOffset[$activeSnapPointIndex] || 0;
+					if (
+						Array.isArray($snapPoints) &&
+						$snapPoints.length > 0 &&
+						$snapPointsOffset &&
+						typeof $activeSnapPointIndex === "number"
+					) {
+						const snapPointsOffsetList = $snapPointsOffset as number[];
+						const activeSnapPointHeight = snapPointsOffsetList[$activeSnapPointIndex] || 0;
 						diffFromInitial += activeSnapPointHeight;
 					}
 
@@ -582,7 +588,7 @@ export function createVaul(props: CreateVaulProps) {
 						$drawerRef.style.height = `${initialDrawerHeight}px`;
 					}
 
-					if ($snapPoints && $snapPoints.length > 0 && !$keyboardIsOpen) {
+					if (Array.isArray($snapPoints) && $snapPoints.length > 0 && !$keyboardIsOpen) {
 						$drawerRef.style.bottom = `0px`;
 					} else {
 						// Negative bottom value would never make sense

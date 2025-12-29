@@ -11,9 +11,9 @@
 	export let scrollLockTimeout: $$Props["scrollLockTimeout"] = undefined;
 	export let snapPoints: $$Props["snapPoints"] = undefined;
 	export let fadeFromIndex: $$Props["fadeFromIndex"] = undefined;
-	export let openFocus: $$Props["openFocus"] = undefined;
 	export let onOutsideClick: $$Props["onOutsideClick"] = undefined;
 	export let closeOnOutsideClick: $$Props["closeOnOutsideClick"] = true;
+	export let onOpenChangeComplete: $$Props["onOpenChangeComplete"] = undefined;
 	export let backgroundColor: $$Props["backgroundColor"] = "black";
 	export let nested: $$Props["nested"] = false;
 	export let shouldScaleBackground: $$Props["shouldScaleBackground"] = false;
@@ -81,7 +81,6 @@
 	$: updateOption("scrollLockTimeout", scrollLockTimeout);
 	$: updateOption("snapPoints", snapPoints);
 	$: updateOption("fadeFromIndex", fadeFromIndex);
-	$: updateOption("openFocus", openFocus);
 	$: updateOption("shouldScaleBackground", shouldScaleBackground);
 	$: updateOption("backgroundColor", backgroundColor);
 	$: updateOption("dismissible", dismissible);
@@ -100,6 +99,9 @@
 		} else if (o) {
 			openDrawer();
 		}
+	}}
+	onOpenChangeComplete={(o) => {
+		onOpenChangeComplete?.(o);
 	}}
 	{...$$restProps}
 >

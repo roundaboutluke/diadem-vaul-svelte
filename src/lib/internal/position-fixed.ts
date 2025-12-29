@@ -99,7 +99,7 @@ export function handlePositionFixed({
 		if (get(nested) || !get(hasBeenOpened)) return;
 		// This is needed to force Safari toolbar to show **before** the drawer starts animating to prevent a gnarly shift from happening
 		if ($isOpen) {
-			setPositionFixed($isOpen);
+			setPositionFixed(Boolean($isOpen));
 
 			if (!get(modal)) {
 				setTimeout(() => {

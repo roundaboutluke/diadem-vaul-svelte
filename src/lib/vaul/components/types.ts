@@ -17,6 +17,28 @@ export type Props = {
 	onOpenChange?: OnChangeFn<boolean>;
 
 	/**
+	 * A callback called when the drawer finishes opening/closing animations.
+	 */
+	onOpenChangeComplete?: DialogPrimitive.RootProps["onOpenChangeComplete"];
+
+	/**
+	 * Prevents the default autofocus behavior when opening.
+	 */
+	openFocus?: DialogPrimitive.ContentProps["onOpenAutoFocus"];
+
+	/**
+	 * Callback when interacting outside the drawer content.
+	 */
+	onOutsideClick?: (event: Event) => void;
+
+	/**
+	 * Whether clicking outside closes the drawer.
+	 *
+	 * @default true
+	 */
+	closeOnOutsideClick?: boolean;
+
+	/**
 	 * Number between 0 and 1 that determines when the drawer should be closed.
 	 *
 	 * Example: threshold of 0.5 would close the drawer if the user swiped for
