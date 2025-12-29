@@ -14,7 +14,7 @@
 	let hasSnapPoints = false;
 	let overlayEl: HTMLDivElement | null = null;
 
-	$: hasSnapPoints = $snapPoints && $snapPoints.length > 0;
+	$: hasSnapPoints = !!$snapPoints?.length;
 	$: overlayRef.set(overlayEl ?? undefined);
 </script>
 

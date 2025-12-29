@@ -1,6 +1,16 @@
-import type { Readable, Stores, StoresValues, Updater, Writable } from "svelte/store";
+import type { Readable, Updater, Writable } from "svelte/store";
 import { derived, writable } from "svelte/store";
 import { onDestroy, onMount } from "svelte";
+
+type Stores = Readable<unknown> | Readable<unknown>[] | Record<string, Readable<unknown>>;
+
+type StoresValues<S> = S extends Readable<infer U>
+	? U
+	: S extends Readable<infer U>[]
+		? { [K in keyof S]: S[K] extends Readable<infer V> ? V : never }
+		: S extends Record<string, Readable<infer V>>
+			? { [K in keyof S]: S[K] extends Readable<infer V2> ? V2 : never }
+			: never;
 
 /**
  * A utility function that creates an effect from a set of stores and a function.

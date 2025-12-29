@@ -113,7 +113,7 @@ export type Props = {
 	 *
 	 */
 	direction?: DrawerDirection;
-} & DialogPrimitive.Props;
+} & DialogPrimitive.RootProps;
 
 export type OverlayProps = DialogPrimitive.OverlayProps;
 export type ContentProps = DialogPrimitive.ContentProps;

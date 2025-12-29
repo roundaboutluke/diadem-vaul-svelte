@@ -34,36 +34,36 @@
 			defaultOpen: open,
 			defaultActiveSnapPoint: activeSnapPoint,
 			onOpenChange: ({ next }) => {
-			if (open !== next) {
-				onOpenChange?.(next);
-				open = next;
-			}
-			return next;
-		},
-		onActiveSnapPointChange: ({ next }) => {
-			if (next === undefined && snapPoints && activeSnapPoint !== next) {
-				const newNext = snapPoints[0];
-				onActiveSnapPointChange?.(newNext);
-				activeSnapPoint = newNext;
-				return newNext;
-			}
+				if (open !== next) {
+					onOpenChange?.(next);
+					open = next;
+				}
+				return next;
+			},
+			onActiveSnapPointChange: ({ next }) => {
+				if (next === undefined && snapPoints && activeSnapPoint !== next) {
+					const newNext = snapPoints[0];
+					onActiveSnapPointChange?.(newNext);
+					activeSnapPoint = newNext;
+					return newNext;
+				}
 
-			if (activeSnapPoint !== next) {
-				onActiveSnapPointChange?.(next);
-				activeSnapPoint = next;
-			}
-			return next;
-		},
-		closeThreshold,
-		scrollLockTimeout,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		snapPoints: snapPoints as any,
-		fadeFromIndex,
-		nested,
-		onDrag,
-		onClose,
-		onRelease,
-		shouldScaleBackground,
+				if (activeSnapPoint !== next) {
+					onActiveSnapPointChange?.(next);
+					activeSnapPoint = next;
+				}
+				return next;
+			},
+			closeThreshold,
+			scrollLockTimeout,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			snapPoints: snapPoints as any,
+			fadeFromIndex,
+			nested,
+			onDrag,
+			onClose,
+			onRelease,
+			shouldScaleBackground,
 			backgroundColor,
 			dismissible,
 			direction,

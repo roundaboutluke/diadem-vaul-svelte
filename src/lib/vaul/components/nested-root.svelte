@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Root from "./root.svelte";
 	import { getCtx } from "../ctx.js";
+	import type { SvelteEvent } from "$lib/internal/types.js";
 	import type { Props } from "./types.js";
 
 	type $$Props = Props;
@@ -24,11 +25,11 @@
 	onClose={() => {
 		onNestedOpenChange(false);
 	}}
-	onDrag={(e, p) => {
+	onDrag={(e: SvelteEvent<PointerEvent | TouchEvent, HTMLElement>, p: number) => {
 		onNestedDrag(e, p);
 		onDrag?.(e, p);
 	}}
-	onOpenChange={(o) => {
+	onOpenChange={(o: boolean) => {
 		if (o) {
 			onNestedOpenChange(o);
 		}
