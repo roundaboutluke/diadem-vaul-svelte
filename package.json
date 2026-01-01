@@ -1,6 +1,6 @@
 {
 	"name": "diadem-vaul-svelte",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"license": "MIT",
 	"repository": "github:roundaboutluke/diadem-vaul-svelte",
 	"scripts": {
