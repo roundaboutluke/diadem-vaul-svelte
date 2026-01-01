@@ -177,6 +177,7 @@
 		position: absolute;
 		background: inherit;
 		background-color: inherit;
+		pointer-events: none;
 	}
 
 	:global([data-vaul-drawer][data-vaul-drawer-direction="top"]::after) {
@@ -209,6 +210,14 @@
 		top: 0;
 		bottom: 0;
 		width: 200%;
+	}
+
+	:global(html:not(.vaul-ios) [data-dialog-content]) {
+		pointer-events: none !important;
+	}
+
+	:global(html:not(.vaul-ios) [data-dialog-content] [data-vaul-drawer]) {
+		pointer-events: auto;
 	}
 
 	:global(

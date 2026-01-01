@@ -35,6 +35,11 @@ const NESTED_DISPLACEMENT = 16;
 const WINDOW_TOP_OFFSET = 26;
 
 const DRAG_CLASS = "vaul-dragging";
+const IOS_CLASS = "vaul-ios";
+
+if (isBrowser && isIOS()) {
+	document.documentElement.classList.add(IOS_CLASS);
+}
 
 const openDrawerIds = writable<string[]>([]);
 
