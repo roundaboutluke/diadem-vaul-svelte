@@ -35,10 +35,16 @@ const NESTED_DISPLACEMENT = 16;
 const WINDOW_TOP_OFFSET = 26;
 
 const DRAG_CLASS = "vaul-dragging";
-const IOS_CLASS = "vaul-ios";
+const WEBKIT_CLASS = "vaul-webkit";
 
-if (isBrowser && isIOS()) {
-	document.documentElement.classList.add(IOS_CLASS);
+if (isBrowser) {
+	const supportsWebkit = typeof CSS !== "undefined" && CSS.supports?.("-webkit-touch-callout", "none");
+	const hasTouch =
+		"ontouchstart" in window ||
+		(navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 0);
+	if (supportsWebkit && hasTouch) {
+		document.documentElement.classList.add(WEBKIT_CLASS);
+	}
 }
 
 const openDrawerIds = writable<string[]>([]);

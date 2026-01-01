@@ -212,11 +212,11 @@
 		width: 200%;
 	}
 
-	:global(html:not(.vaul-ios) [data-dialog-content]) {
+	:global(html:not(.vaul-webkit) [data-dialog-content]) {
 		pointer-events: none !important;
 	}
 
-	:global(html:not(.vaul-ios) [data-dialog-content] [data-vaul-drawer]) {
+	:global(html:not(.vaul-webkit) [data-dialog-content] [data-vaul-drawer]) {
 		pointer-events: auto;
 	}
 
