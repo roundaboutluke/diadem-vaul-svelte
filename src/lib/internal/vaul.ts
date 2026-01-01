@@ -38,7 +38,8 @@ const DRAG_CLASS = "vaul-dragging";
 const WEBKIT_CLASS = "vaul-webkit";
 
 if (isBrowser) {
-	const supportsWebkit = typeof CSS !== "undefined" && CSS.supports?.("-webkit-touch-callout", "none");
+	const supportsWebkit =
+		typeof CSS !== "undefined" && CSS.supports?.("-webkit-touch-callout", "none");
 	const hasTouch =
 		"ontouchstart" in window ||
 		(navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 0);
