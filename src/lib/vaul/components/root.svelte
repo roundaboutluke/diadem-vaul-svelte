@@ -172,6 +172,17 @@
 		opacity: 1;
 	}
 
+	:global([data-vaul-scroll-area]) {
+		height: 100%;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	:global(html.vaul-webkit [data-vaul-drawer][data-vaul-drawer-direction="bottom"]) {
+		overflow: visible !important;
+	}
+
 	:global([data-vaul-drawer]::after) {
 		content: "";
 		position: absolute;
@@ -194,6 +205,19 @@
 		left: 0;
 		right: 0;
 		height: 200%;
+	}
+
+	:global([data-vaul-drawer][data-vaul-drawer-direction="bottom"]::before) {
+		content: "";
+		position: absolute;
+		top: 100%;
+		bottom: initial;
+		left: 0;
+		right: 0;
+		height: 200%;
+		background: inherit;
+		background-color: inherit;
+		pointer-events: none;
 	}
 
 	:global([data-vaul-drawer][data-vaul-drawer-direction="left"]::after) {

@@ -78,8 +78,10 @@
 			data-vaul-drawer-direction={$direction}
 			data-vaul-drawer-visible={$visible ? "true" : "false"}
 		>
-			<Visible />
-			<slot />
+			<div data-vaul-scroll-area="">
+				<Visible />
+				<slot />
+			</div>
 		</div>
 	{/snippet}
 </DialogPrimitive.Content>
