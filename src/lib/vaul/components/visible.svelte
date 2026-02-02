@@ -11,12 +11,9 @@
 	} = getCtx();
 
 	onMount(() => {
-		const raf = requestAnimationFrame(() => {
-			visible.set(true);
-		});
+		visible.set(true);
 
 		return () => {
-			cancelAnimationFrame(raf);
 			scaleBackground(false);
 			restorePositionSetting();
 		};

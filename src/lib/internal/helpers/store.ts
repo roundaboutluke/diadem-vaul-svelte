@@ -2,11 +2,11 @@ import type { Readable, Updater, Writable } from "svelte/store";
 import { derived, writable } from "svelte/store";
 import { onDestroy, onMount } from "svelte";
 
-type Stores = Readable<unknown> | Array<Readable<unknown>>;
+type Stores = Readable<unknown> | readonly Readable<unknown>[];
 
 type StoresValues<S> = S extends Readable<infer _U>
 	? _U
-	: S extends Readable<infer _U>[]
+	: S extends readonly Readable<infer _U>[]
 		? { [K in keyof S]: S[K] extends Readable<infer _V> ? _V : never }
 		: never;
 
@@ -19,7 +19,7 @@ type StoresValues<S> = S extends Readable<infer _U>
  * @param fn - The function to run when the stores change
  * @returns A function that can be used to unsubscribe the effect
  */
-export function effect<S extends Stores>(
+export function effect<const S extends Stores>(
 	stores: S,
 	fn: (values: StoresValues<S>) => (() => void) | void
 ): () => void {
@@ -55,7 +55,7 @@ export function effect<S extends Stores>(
  * @param fn - The function to derive the store from
  * @returns A derived store that automatically unsubscribes from its dependencies
  */
-export function derivedWithUnsubscribe<S extends Stores, T>(
+export function derivedWithUnsubscribe<const S extends Stores, T>(
 	stores: S,
 	fn: (values: StoresValues<S>, onUnsubscribe: (cb: () => void) => void) => T
 ): Readable<T> {

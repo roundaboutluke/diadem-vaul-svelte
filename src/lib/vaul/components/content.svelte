@@ -13,7 +13,7 @@
 		helpers: { getContentStyle },
 		methods: { onPress, onDrag, onRelease, closeDrawer },
 		options: { direction, dismissible: localDismissible },
-		rootProps: { closeOnOutsideClick = true, onOutsideClick, onOpenChange } = {},
+		rootProps: { closeOnOutsideClick = true, onOutsideClick, onOpenChange, openFocus } = {},
 	} = getCtx();
 
 	export let style: $$Props["style"] = "";
@@ -26,6 +26,7 @@
 <DialogPrimitive.Content
 	style={$getContentStyle(style)}
 	preventScroll={false}
+	onOpenAutoFocus={openFocus}
 	onEscapeKeydown={(e) => {
 		e.preventDefault();
 	}}
@@ -71,17 +72,15 @@
 			on:touchend={(e) => {
 				onRelease(e);
 			}}
-			on:touchmove|nonpassive={(e) => {
+			on:touchmove={(e) => {
 				onDrag(e);
 			}}
 			data-vaul-drawer=""
 			data-vaul-drawer-direction={$direction}
 			data-vaul-drawer-visible={$visible ? "true" : "false"}
 		>
-			<div data-vaul-scroll-area="">
-				<Visible />
-				<slot />
-			</div>
+			<Visible />
+			<slot />
 		</div>
 	{/snippet}
 </DialogPrimitive.Content>

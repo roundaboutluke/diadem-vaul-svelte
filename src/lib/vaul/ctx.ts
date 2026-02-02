@@ -8,6 +8,7 @@ type RootProps = {
 	closeOnOutsideClick?: boolean;
 	onOutsideClick?: (event: Event) => void;
 	onOpenChange?: (open: boolean) => void;
+	openFocus?: import("bits-ui").Dialog.ContentProps["onOpenAutoFocus"];
 };
 
 export function setCtx(props: CreateVaulProps = {}, rootProps: RootProps = {}) {

@@ -17,14 +17,9 @@ export type Props = {
 	onOpenChange?: OnChangeFn<boolean>;
 
 	/**
-	 * A callback called when the drawer finishes opening/closing animations.
-	 */
-	onOpenChangeComplete?: DialogPrimitive.RootProps["onOpenChangeComplete"];
-
-	/**
 	 * Prevents the default autofocus behavior when opening.
 	 */
-	openFocus?: DialogPrimitive.ContentProps["onOpenAutoFocus"];
+	openFocus?: import("bits-ui").Dialog.ContentProps["onOpenAutoFocus"];
 
 	/**
 	 * Callback when interacting outside the drawer content.

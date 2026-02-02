@@ -35,18 +35,6 @@ const NESTED_DISPLACEMENT = 16;
 const WINDOW_TOP_OFFSET = 26;
 
 const DRAG_CLASS = "vaul-dragging";
-const WEBKIT_CLASS = "vaul-webkit";
-
-if (isBrowser) {
-	const supportsWebkit =
-		typeof CSS !== "undefined" && CSS.supports?.("-webkit-touch-callout", "none");
-	const hasTouch =
-		"ontouchstart" in window ||
-		(navigator.maxTouchPoints !== undefined && navigator.maxTouchPoints > 0);
-	if (supportsWebkit && hasTouch) {
-		document.documentElement.classList.add(WEBKIT_CLASS);
-	}
-}
 
 const openDrawerIds = writable<string[]>([]);
 
@@ -566,14 +554,8 @@ export function createVaul(props: CreateVaulProps) {
 						keyboardIsOpen.set(!$keyboardIsOpen);
 					}
 
-					if (
-						Array.isArray($snapPoints) &&
-						$snapPoints.length > 0 &&
-						$snapPointsOffset &&
-						typeof $activeSnapPointIndex === "number"
-					) {
-						const snapPointsOffsetList = $snapPointsOffset as number[];
-						const activeSnapPointHeight = snapPointsOffsetList[$activeSnapPointIndex] || 0;
+					if ($snapPoints && $snapPoints.length > 0 && $snapPointsOffset && $activeSnapPointIndex) {
+						const activeSnapPointHeight = $snapPointsOffset[$activeSnapPointIndex] || 0;
 						diffFromInitial += activeSnapPointHeight;
 					}
 
@@ -600,7 +582,7 @@ export function createVaul(props: CreateVaulProps) {
 						$drawerRef.style.height = `${initialDrawerHeight}px`;
 					}
 
-					if (Array.isArray($snapPoints) && $snapPoints.length > 0 && !$keyboardIsOpen) {
+					if ($snapPoints && $snapPoints.length > 0 && !$keyboardIsOpen) {
 						$drawerRef.style.bottom = `0px`;
 					} else {
 						// Negative bottom value would never make sense

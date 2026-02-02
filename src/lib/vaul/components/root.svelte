@@ -11,9 +11,9 @@
 	export let scrollLockTimeout: $$Props["scrollLockTimeout"] = undefined;
 	export let snapPoints: $$Props["snapPoints"] = undefined;
 	export let fadeFromIndex: $$Props["fadeFromIndex"] = undefined;
+	export let openFocus: $$Props["openFocus"] = undefined;
 	export let onOutsideClick: $$Props["onOutsideClick"] = undefined;
 	export let closeOnOutsideClick: $$Props["closeOnOutsideClick"] = true;
-	export let onOpenChangeComplete: $$Props["onOpenChangeComplete"] = undefined;
 	export let backgroundColor: $$Props["backgroundColor"] = "black";
 	export let nested: $$Props["nested"] = false;
 	export let shouldScaleBackground: $$Props["shouldScaleBackground"] = false;
@@ -72,6 +72,7 @@
 			closeOnOutsideClick,
 			onOutsideClick,
 			onOpenChange,
+			openFocus,
 		}
 	);
 
@@ -99,9 +100,6 @@
 		} else if (o) {
 			openDrawer();
 		}
-	}}
-	onOpenChangeComplete={(o) => {
-		onOpenChangeComplete?.(o);
 	}}
 	{...$$restProps}
 >
@@ -172,23 +170,11 @@
 		opacity: 1;
 	}
 
-	:global([data-vaul-scroll-area]) {
-		height: 100%;
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		-webkit-overflow-scrolling: touch;
-	}
-
-	:global(html.vaul-webkit [data-vaul-drawer][data-vaul-drawer-direction="bottom"]) {
-		overflow: visible !important;
-	}
-
 	:global([data-vaul-drawer]::after) {
 		content: "";
 		position: absolute;
 		background: inherit;
 		background-color: inherit;
-		pointer-events: none;
 	}
 
 	:global([data-vaul-drawer][data-vaul-drawer-direction="top"]::after) {
@@ -207,19 +193,6 @@
 		height: 200%;
 	}
 
-	:global([data-vaul-drawer][data-vaul-drawer-direction="bottom"]::before) {
-		content: "";
-		position: absolute;
-		top: 100%;
-		bottom: initial;
-		left: 0;
-		right: 0;
-		height: 200%;
-		background: inherit;
-		background-color: inherit;
-		pointer-events: none;
-	}
-
 	:global([data-vaul-drawer][data-vaul-drawer-direction="left"]::after) {
 		left: initial;
 		right: 100%;
@@ -234,14 +207,6 @@
 		top: 0;
 		bottom: 0;
 		width: 200%;
-	}
-
-	:global(html:not(.vaul-webkit) [data-dialog-content]) {
-		pointer-events: none !important;
-	}
-
-	:global(html:not(.vaul-webkit) [data-dialog-content] [data-vaul-drawer]) {
-		pointer-events: auto;
 	}
 
 	:global(
