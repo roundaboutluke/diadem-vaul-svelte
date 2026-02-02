@@ -15,6 +15,7 @@
 	export let onOutsideClick: $$Props["onOutsideClick"] = undefined;
 	export let closeOnOutsideClick: $$Props["closeOnOutsideClick"] = true;
 	export let backgroundColor: $$Props["backgroundColor"] = "black";
+	export let modal: $$Props["modal"] = undefined;
 	export let nested: $$Props["nested"] = false;
 	export let shouldScaleBackground: $$Props["shouldScaleBackground"] = false;
 	export let activeSnapPoint: $$Props["activeSnapPoint"] = undefined;
@@ -66,6 +67,7 @@
 			shouldScaleBackground,
 			backgroundColor,
 			dismissible,
+			modal,
 			direction,
 		},
 		{
@@ -85,6 +87,7 @@
 	$: updateOption("shouldScaleBackground", shouldScaleBackground);
 	$: updateOption("backgroundColor", backgroundColor);
 	$: updateOption("dismissible", dismissible);
+	$: updateOption("modal", modal);
 	$: updateOption("direction", direction);
 
 	$: open && !$isOpen && openDrawer();
