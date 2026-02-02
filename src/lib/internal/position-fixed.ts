@@ -72,9 +72,7 @@ export function handlePositionFixed({
 				return;
 			}
 
-			if (x !== 0 || y !== 0) {
-				window.scrollTo(x, y);
-			}
+			window.scrollTo(x, y);
 		});
 
 		previousBodyPosition = null;
@@ -99,7 +97,7 @@ export function handlePositionFixed({
 		if (get(nested) || !get(hasBeenOpened)) return;
 		// This is needed to force Safari toolbar to show **before** the drawer starts animating to prevent a gnarly shift from happening
 		if ($isOpen) {
-			setPositionFixed(Boolean($isOpen));
+			setPositionFixed($isOpen);
 
 			if (!get(modal)) {
 				setTimeout(() => {
