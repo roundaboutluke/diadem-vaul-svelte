@@ -76,13 +76,6 @@ export type Props = {
 	onRelease?: CreateVaulProps["onRelease"] & {};
 
 	/**
-	 * Whether the drawer should behave modally (e.g. prevent background scrolling).
-	 *
-	 * @default true
-	 */
-	modal?: CreateVaulProps["modal"] & {};
-
-	/**
 	 * Whether this drawer is nested inside another drawer.
 	 *
 	 * @default false
