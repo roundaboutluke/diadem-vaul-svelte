@@ -740,13 +740,13 @@ export function createVaul(props: CreateVaulProps) {
 		}
 
 		if (get(snapPoints)) {
-			onReleaseSnapPoints({
+			const open = onReleaseSnapPoints({
 				draggedDistance: distMoved * getDirectionMultiplier($direction),
 				closeDrawer,
 				velocity,
 				dismissible: get(dismissible),
 			});
-			onReleaseProp?.(event, true);
+			onReleaseProp?.(event, open);
 			return;
 		}
 

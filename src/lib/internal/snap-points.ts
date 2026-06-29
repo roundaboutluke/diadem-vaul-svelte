@@ -161,9 +161,9 @@ export function handleSnapPoints({
 		closeDrawer: () => void;
 		velocity: number;
 		dismissible: boolean;
-	}) {
+	}): boolean {
 		const $fadeFromIndex = get(fadeFromIndex);
-		if ($fadeFromIndex === undefined) return;
+		if ($fadeFromIndex === undefined) return true;
 		const $activeSnapPointOffset = get(activeSnapPointOffset);
 		const $activeSnapPointIndex = get(activeSnapPointIndex);
 		const $overlayRef = get(overlayRef);
@@ -187,14 +187,16 @@ export function handleSnapPoints({
 		}
 
 		if (velocity > 2 && !hasDraggedUp) {
-			if (dismissible) closeDrawer();
-			else snapToPoint($snapPointsOffset[0]); // snap to initial point
-			return;
+			if (dismissible) {
+				closeDrawer();
+				return false;
+			} else snapToPoint($snapPointsOffset[0]); // snap to initial point
+			return true;
 		}
 
 		if (velocity > 2 && hasDraggedUp && $snapPointsOffset && $snapPoints) {
 			snapToPoint($snapPointsOffset[$snapPoints.length - 1] as number);
-			return;
+			return true;
 		}
 
 		// Find the closest snap point to the current position
@@ -212,20 +214,22 @@ export function handleSnapPoints({
 			// Don't do anything if we swipe upwards while being on the last snap point
 			if (dragDirection > 0 && get(isLastSnapPoint) && $snapPoints) {
 				snapToPoint($snapPointsOffset[$snapPoints.length - 1]);
-				return;
+				return true;
 			}
 
 			if (isFirst && dragDirection < 0 && dismissible) {
 				closeDrawer();
+				return false;
 			}
 
-			if ($activeSnapPointIndex === null) return;
+			if ($activeSnapPointIndex === null) return true;
 
 			snapToPoint($snapPointsOffset[$activeSnapPointIndex + dragDirection]);
-			return;
+			return true;
 		}
 
 		snapToPoint(closestSnapPoint);
+		return true;
 	}
 
 	function onDrag({ draggedDistance }: { draggedDistance: number }) {
