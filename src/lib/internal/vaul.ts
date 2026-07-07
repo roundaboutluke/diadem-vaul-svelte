@@ -154,6 +154,8 @@ export function createVaul(props: CreateVaulProps) {
 	let dragStartTime: Date | null = null;
 	let isClosing = false;
 	let pointerStart = 0;
+	// Pointer start on the axis across the drawer, used to spot sideways swipes.
+	let crossAxisStart = 0;
 	let dragEndTime: Date | null = null;
 	let lastTimeDragPrevented: Date | null = null;
 	let isAllowedToDrag = false;
@@ -287,6 +289,7 @@ export function createVaul(props: CreateVaulProps) {
 		(event.target as HTMLElement).setPointerCapture(event.pointerId);
 
 		pointerStart = isVertical(get(direction)) ? event.screenY : event.screenX;
+		crossAxisStart = isVertical(get(direction)) ? event.screenX : event.screenY;
 	}
 
 	function shouldDrag(el: EventTarget, isDraggingInDirection: boolean) {
@@ -382,6 +385,28 @@ export function createVaul(props: CreateVaulProps) {
 
 		// Disallow dragging down to close when first snap point is the active one and dismissible prop is set to false.
 		if ($snapPoints && $activeSnapPointIndex === 0 && !get(dismissible)) return;
+		// A sideways swipe that starts over a horizontal scroller should scroll it
+		// rather than drag the sheet, so bail on those. A vertical drag falls
+		// through, so scrollable content still scrolls and the sheet still opens.
+		if (!isAllowedToDrag) {
+			let el = event.target as HTMLElement | null;
+			while (
+				el &&
+				!(
+					el.scrollWidth > el.clientWidth &&
+					/(auto|scroll)/.test(window.getComputedStyle(el).overflowX)
+				)
+			) {
+				el = el.parentElement;
+			}
+			if (el) {
+				const point = "changedTouches" in event ? event.changedTouches[0] : (event as PointerEvent);
+				const across = isVertical($direction) ? point?.screenX : point?.screenY;
+				const crossMoved = Math.abs((across ?? crossAxisStart) - crossAxisStart);
+				const mainMoved = Math.abs(getDistanceMoved(pointerStart, $direction, event));
+				if (mainMoved <= crossMoved || mainMoved < 8) return;
+			}
+		}
 		if (!isAllowedToDrag && !shouldDrag(event.target as HTMLElement, isDraggingInDirection)) {
 			return;
 		}
